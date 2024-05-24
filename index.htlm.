@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Commerce Art Shop</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    .products, .cart {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .product, .cart-item {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px;
+      width: 200px;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Art Shop</h1>
+  <div id="products" class="products"></div>
+  <h2>Cart</h2>
+  <div id="cart" class="cart"></div>
+  <button id="checkoutButton">Checkout</button>
+
+  <script>
+    const products = [
+      { id: 1, name: 'Mona Lisa', price: 500, image: 'https://via.placeholder.com/150' },
+      { id: 2, name: 'Starry Night', price: 700, image: 'https://via.placeholder.com/150' },
+      { id: 3, name: 'The Scream', price: 600, image: 'https://via.placeholder.com/150' },
+    ];
+
+    const cart = [];
+
+    function displayProducts() {
+      const productsDiv = document.getElementById('products');
+      productsDiv.innerHTML = '';
+
+      products.forEach(product => {
+        const productDiv = document.createElement('div');
+        productDiv.classList.add('product');
+        productDiv.innerHTML = `
+          <img src="${product.image}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>Price: $${product.price}</p>
+          <button onclick="addToCart(${product.id})">Add to Cart</button>
+        `;
+        productsDiv.appendChild(productDiv);
+      });
+    }
+
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      cart.push(product);
+      displayCart();
+    }
+
+    function displayCart() {
+      const cartDiv = document.getElementById('cart');
+      cartDiv.innerHTML = '';
+
+      cart.forEach((product, index) => {
+        const cartItemDiv = document.createElement('div');
+        cartItemDiv.classList.add('cart-item');
+        cartItemDiv.innerHTML = `
+          <img src="${product.image}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>Price: $${product.price}</p>
+          <button onclick="removeFromCart(${index})">Remove</button>
+        `;
+        cartDiv.appendChild(cartItemDiv);
+      });
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      displayCart();
+    }
+
+    document.getElementById('checkoutButton').addEventListener('click', () => {
+      alert('Proceeding to checkout...');
+      // Logic to proceed to checkout goes here
+    });
+
+    displayProducts();
+  </script>
+</body>
+</html>
